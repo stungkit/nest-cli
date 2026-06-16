@@ -22,8 +22,8 @@ export class AbstractRunner {
       shell: true,
     };
     return new Promise<null | string>((resolve, reject) => {
-      const command = [this.binary, ...this.args, ...args].join(' ');
-      const child: ChildProcess = spawn(command, options);
+      const fullCommand = [this.binary, ...this.args, ...args].join(' ');
+      const child: ChildProcess = spawn(fullCommand, options);
       if (collect) {
         child.stdout!.on('data', (data) =>
           resolve(data.toString().replace(/\r\n|\n/, '')),
@@ -33,9 +33,7 @@ export class AbstractRunner {
         if (code === 0) {
           resolve(null);
         } else {
-          console.error(
-            red(MESSAGES.RUNNER_EXECUTION_ERROR(`${this.binary} ${command}`)),
-          );
+          console.error(red(MESSAGES.RUNNER_EXECUTION_ERROR(fullCommand)));
           reject();
         }
       });
