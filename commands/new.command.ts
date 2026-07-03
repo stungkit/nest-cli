@@ -37,7 +37,6 @@ export class NewCommand extends AbstractCommand {
         exitIfExtraArgs(command, 1);
 
         const options: Input[] = [];
-        const availableLanguages = ['js', 'ts', 'javascript', 'typescript'];
         options.push({ name: 'directory', value: command.directory });
         options.push({ name: 'dry-run', value: command.dryRun });
         options.push({ name: 'skip-git', value: command.skipGit });
@@ -48,6 +47,8 @@ export class NewCommand extends AbstractCommand {
           value: command.packageManager,
         });
         options.push({ name: 'collection', value: command.collection });
+
+        const availableLanguages = ['js', 'ts', 'javascript', 'typescript'];
 
         if (!!command.language) {
           const lowercasedLanguage = command.language.toLowerCase();
